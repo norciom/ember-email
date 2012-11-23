@@ -1,0 +1,444 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6"> <![endif]--> <!--[if IE 7 ]>    <html lang="en" class="ie7"> <![endif]--> <!--[if IE 8 ]>    <html lang="en" class="ie8"> <![endif]--> <!--[if IE 9 ]>    <html lang="en" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <title></title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/bootstrap.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=2">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <script type="text/x-handlebars" data-template-name="application">
+  <div class="mainDiv">
+    <div class="titleDiv">
+      <h1>{{title}}</h1>
+    </div>
+    <div class="menuDiv well well-small">
+      <div class="btn-group">
+        <button class="btn"><i class="icon-refresh"></i></button>
+      </div>
+      <div class="btn-group pull-right">
+        <button class="btn"><i class="icon-off"></i></button>
+        <button class="btn"><i class="icon-wrench"></i></button>
+      </div>
+    </div>
+    <div class="bodyDiv">
+      {{outlet}}
+    </div>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="inbox">
+  <div class="leftDiv">
+  {{view templateName="search"}}
+  {{view templateName="folders"}}
+  </div>
+  <div class="rightDiv">
+  {{view templateName="inbox-menu"}}
+  {{view templateName="email-list"}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="search">
+  <div class="searchDiv well well-small">
+    <div class="dropdown" style="margin-bottom: 5px;">
+      <button class="btn btn-block dropdown-toggle" data-toggle="dropdown" type="button">
+        <span>Search in: <strong>Subject</strong></span>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a>From</a></li>
+        <li><a>To</a></li>
+        <li><a>Subject</a></li>
+        <li><a>Body</a></li>
+      </ul>
+    </div>
+    <div class="input-append">
+      <input type="text" style="width:178px;" placeholder="key words"></input>
+      <button class="btn"><i class="icon-search"></i></button>
+    </div>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="folders">
+  <div class="foldersDiv">
+    <ul class="nav nav-list">
+      <li class="nav-header">Folders</li>
+      <li><a {{action showInbox}} href='#'><i class="icon-inbox"></i> Inbox</a></li>
+      <li><a {{action showSent}} href='#'><i class="icon-share-alt"></i> Sent</a></li>
+      <li><a {{action showDrafts}} href='#'><i class="icon-folder-open"></i>Drafts</a></li>
+      <li class="divider"></li>
+      <li><a {{action showCompose}} href='#'><i class="icon-pencil"></i>Compose</a></li>
+      <li><a {{action showContacts}} href='#'><i class="icon-th-list"></i> Contacts</a></li>
+    </ul>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="inbox-menu">
+  <div class="well well-small">
+    <div class="btn-group">
+      <button class="btn"><i class="icon-ok"></i></button>
+    </div>
+    <div class="btn-group pull-right">
+      <button class="btn"><i class="icon-remove"></i></button>
+      <button class="btn"><i class="icon-eye-open"></i></button>
+      <button class="btn"><i class="icon-eye-close"></i></button>
+    </div>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="email-list">
+   <table class="table table-striped table-hover table-condensed">
+      <tbody>
+        <tr class="info" {{action showEmail}}>
+          <td>
+            <input type="checkbox">
+          </td>
+          <td>
+            <span class="email">name@email.com</span>
+          </td>
+          <td>
+            <span class="subject">Subject</span>
+          </td>
+          <td>
+            <span class="date">12:03</span>
+          </td>
+        </tr>
+        <tr {{action showEmail}}>
+          <td>
+            <input type="checkbox">
+          </td>
+          <td>
+            <span class="email">name@email.com</span>
+          </td>
+          <td>
+            <span class="subject">Subject</span>
+          </td>
+          <td>
+            <span class="date">12:03</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="sent">
+  <div class="leftDiv">
+  {{view templateName="search"}}
+  {{view templateName="folders"}}
+  </div>
+  <div class="rightDiv">
+  {{view templateName="inbox-menu"}}
+  {{view templateName="email-list"}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="drafts">
+  <div class="leftDiv">
+  {{view templateName="search"}}
+  {{view templateName="folders"}}
+  </div>
+  <div class="rightDiv">
+  {{view templateName="inbox-menu"}}
+  {{view templateName="email-list"}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="compose">
+  <div class="leftDiv">
+  {{view templateName="attachments"}}
+  {{view templateName="contacts-filter"}}
+  <div class="contactsMiniListDiv">
+  {{view templateName="contacts-list"}}
+  </div>
+  </div>
+  <div class="rightDiv">
+  {{view templateName="compose-form"}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="attachments">
+  <div class="attachmentsDiv well well-small">
+    <ul class="nav nav-tabs nav-stacked">
+      <li>
+        <div class="alert file">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <span>file</span>
+        </div>
+      </li>
+      <li>
+        <div class="alert file">
+          <button type="button" class="close" data-dismiss="alert">×</button>
+          <span>file</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="btn-group pull-right" style="padding-left: 5px; margin-bottom: 5px">
+    <button type="button" class="btn btn-primary"><i class="icon-plus icon-white"></i> Add</button>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="contacts">
+  <div class="leftDiv">
+  {{view templateName="contacts-filter"}}
+  <div class="contactsListDiv">
+  {{view templateName="contacts-list"}}
+  </div>
+  </div>
+  <div class="rightDiv">
+  {{view templateName="contacts-menu"}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="new-contacts">
+  <div class="leftDiv">
+  {{view templateName="contacts-filter"}}
+  <div class="contactsListDiv">
+  {{view templateName="contacts-list"}}
+  </div>
+  </div>
+  <div class="rightDiv">
+  {{view templateName="contacts-form"}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="edit-contacts">
+  <div class="leftDiv">
+  {{view templateName="contacts-filter"}}
+  <div class="contactsListDiv">
+  {{view templateName="contacts-list"}}
+  </div>
+  </div>
+  <div class="rightDiv">
+  {{view templateName="edit-contact"}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="contacts-filter">
+  <div class="btn-group" style="padding-left: 5px;">
+    <div class="input-append">
+      <input type="text" style="width:192px;" placeholder="name"></input>
+      <button class="btn"><i class="icon-filter"></i></button>
+    </div>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="contacts-list">
+  <table class="table table-striped table-hover table-condensed">
+    <tbody>
+      <tr>
+        <td class="contact-select">
+          <input type="checkbox">
+        </td>
+        <td {{action editContact}}>
+          <span class="contact-name">Nume</span>
+          <span class="contact-email">name@mail.com</span>
+        </td>
+      </tr>
+      <tr>
+        <td class="contact-select">
+          <input type="checkbox">
+        </td>
+        <td {{action editContact}}>
+          <span class="contact-name">Nume</span>
+          <span class="contact-email">name@mail.com</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="compose-form">
+  <form>
+    <fieldset>
+      <div>
+      <label class="compose-label">To:</label>
+      <input type="text" class="compose-input" placeholder="joe@mail.com">
+      </div>
+      <div>
+      <label class="compose-label">CC:</label>
+      <input type="text" class="compose-input" placeholder="joe@mail.com">
+      </div>
+      <div>
+      <label class="compose-label">Subject:</label>
+      <input type="text" class="compose-input" placeholder="Hi">
+      </div>
+      <textarea rows="16" class="input-block-level"></textarea>
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary"><i class="icon-envelope icon-white"></i> Send</button>
+        <button type="button" class="btn"><i class="icon-folder-open"></i> Save</button>
+        <button type="button" class="btn" {{action showInbox}}><i class="icon-remove"></i> Cancel</button>
+      </div>
+    </fieldset>
+  </form>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="contacts-menu">
+  <div class="btn-toolbar">
+    <div class="btn-group">
+      <button type="button" class="btn"><i class="icon-user"></i> Add</button>
+      <button type="button" class="btn"><i class="icon-remove"></i> Remove</button>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn" {{action showInbox}}><i class="icon-inbox"></i> Inbox</button>
+      <button type="button" class="btn" {{action showSent}}><i class="icon-share-alt"></i> Sent</button>
+      <button type="button" class="btn" {{action showDrafts}}><i class="icon-folder-open"></i> Drafts</button>
+    </div>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="contacts-form">
+  <div class="contactDiv">
+    <div class="well well-small">
+      <h3>New contact</h3>
+    </div>
+    <form class="form-horizontal">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label">Name</label>
+          <div class="controls">
+            <input type="text" placeholder="Joe">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Email</label>
+          <div class="controls">
+            <input type="text" placeholder="joe@mail.com">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><i class="icon-plus icon-white"></i> Add</button>
+          <button type="button" class="btn" {{action showContacts}}>Cancel</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="edit-contact">
+  <div class="contactDiv">
+    <div class="well well-small">
+      <h3>Edit contact</h3>
+    </div>
+    <form class="form-horizontal">
+      <fieldset>
+        <div class="control-group">
+          <label class="control-label">Name</label>
+          <div class="controls">
+            <input type="text" value="Name">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label">Email</label>
+          <div class="controls">
+            <input type="text"value="name@mail.com">
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><i class="icon-ok icon-white"></i> Save</button>
+          <button type="button" class="btn" {{action showContacts}}>Cancel</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="email">
+  <div class="leftDiv">
+  {{view templateName="email-attachments"}}
+  {{view templateName="folders"}}
+  </div>
+  <div class="rightDiv">
+  {{view templateName="email-form"}}
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="email-attachments">
+  <div class="attachmentsDiv well well-small">
+    <ul class="nav nav-tabs nav-stacked">
+      <li>
+        <div class="alert file">
+          <i class="icon-download"></i>
+          <span>file</span>
+        </div>
+      </li>
+      <li>
+        <div class="alert file">
+          <i class="icon-download"></i>
+          <span>file</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="downloadAllDiv">
+    <div class="btn-group pull-right">
+      <button  type="button" class="btn"><i class="icon-download-alt"></i> Download all</button>
+    </div>
+  </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="email-form">
+  <div class="fromDiv well">
+    <span>FROM:</span>
+    <span class="label label-inverse">name@mail.com</span>
+    <br/>
+    <span>CC:</span>
+    <span class="label label-info">name@mail.com</span>
+    <span class="label label-info">name@mail.com</span>
+    <span class="label label-info">name@mail.com</span>
+    <span class="label label-info">name@mail.com</span>
+    <span class="label label-info">name@mail.com</span>
+  </div>
+  <div class="btn-group pull-right">
+    <button class="btn dropdown-toggle" data-toggle="dropdown" type="button">
+      More
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a>From</a></li>
+      <li><a>To</a></li>
+      <li><a>Subject</a></li>
+      <li><a>Body</a></li>
+    </ul>
+  </div>
+  <div class="btn-group">
+    <button  type="button" class="btn"><i class="icon-chevron-left"></i></button>
+    <button  type="button" class="btn"><i class="icon-share-alt"></i></button>
+    <button  type="button" class="btn"><i class="icon-share-alt"></i><strong>&hellip;</strong><i class="icon-share-alt"></i></button>
+    <button  type="button" class="btn"><i class="icon-forward"></i></button>
+    <button  type="button" class="btn"><i class="icon-chevron-right"></i></button>
+  </div>
+  <div class="messageDiv">
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum faucibus neque in vulputate. Etiam vehicula tempor ligula non gravida. Etiam massa massa, sagittis eget tristique at, mattis id urna. Donec tempor diam tincidunt ligula ultrices viverra. Sed id purus fringilla erat rutrum pellentesque. Aliquam nec condimentum turpis. Integer risus nisi, viverra non egestas ac, lobortis id turpis. Nulla facilisi. Donec in dignissim magna.
+
+Quisque cursus euismod leo a consectetur. Phasellus vitae odio mi, eget bibendum enim. Nulla facilisi. Quisque nulla velit, pretium eget volutpat quis, aliquet in est. Duis ornare, est non suscipit commodo, purus eros congue lectus, ut ullamcorper justo elit ac nunc. Suspendisse enim quam, porttitor ut fringilla quis, rhoncus laoreet sapien. Etiam quis consequat metus. Nunc a eros sed neque tincidunt rutrum. Nam vel elit in tellus lobortis ultricies nec a felis. Fusce eu quam leo. Sed eget magna dui, a fermentum dolor. Vestibulum pellentesque nisl sed est luctus molestie. Mauris erat orci, elementum sed dapibus at, euismod scelerisque nulla.
+
+Vivamus est dolor, vulputate non semper eget, rhoncus a quam. Morbi gravida libero mattis sem congue sit amet ornare nisl lacinia. Phasellus cursus, lacus a egestas viverra, massa felis aliquam sapien, sed vestibulum massa magna nec est. Proin vulputate neque ut enim vehicula ultricies. Donec elit justo, eleifend a mollis sed, tincidunt sed leo. Nunc sit amet semper nulla. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi pulvinar interdum faucibus. Vestibulum a augue ipsum, id sagittis mi. Morbi vehicula fermentum est a hendrerit.
+
+In mauris leo, volutpat ut fermentum at, posuere eget turpis. Fusce porta euismod augue, sed vulputate risus viverra non. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer sed urna felis. Mauris id neque leo. Nam vitae eros augue. Ut vulputate gravida sapien nec malesuada. Vivamus nec sollicitudin dolor. Proin tincidunt hendrerit metus, accumsan hendrerit nunc suscipit sit amet. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras auctor velit non dui cursus dapibus. Integer vitae nisl nulla, nec tempor risus.
+
+Donec sed elit lobortis diam adipiscing pretium. Duis elementum urna nec felis mollis hendrerit. Cras ut massa ac leo convallis lobortis. Suspendisse potenti. Phasellus elementum magna nec libero ultricies varius. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id tortor sit amet lorem viverra ornare vitae fermentum nisi. Suspendisse tellus ante, auctor sed cursus quis, ultrices eget magna. Vivamus accumsan rhoncus diam, quis commodo magna posuere in. Etiam posuere ultrices scelerisque. Suspendisse feugiat iaculis bibendum.
+  </div>
+  </script>
+
+  <script src="js/libs/jquery-1.7.2.min.js"></script>
+  <script src="js/libs/handlebars-1.0.0.beta.6.js"></script>
+  <script src="js/libs/bootstrap.min.js"></script>
+  <script src="js/libs/ember-1.0.0-pre.2.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
